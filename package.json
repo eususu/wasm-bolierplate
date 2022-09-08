@@ -6,12 +6,15 @@
   "author": "jongjin pak <belovian@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "webpack build --mode production"
+    "build": "webpack build --mode production",
+    "serve": "webpack serve"
   },
   "devDependencies": {
     "@wasm-tool/wasm-pack-plugin": "^1.6.0",
     "html-webpack-plugin": "^5.5.0",
+    "text-encoding": "^0.7.0",
     "webpack": "^5.74.0",
-    "webpack-cli": "^4.10.0"
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.11.0"
   }
 }
