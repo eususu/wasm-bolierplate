@@ -10,7 +10,11 @@ module.exports = {
         filename: 'index.js',
     },
     plugins: [
-        new HtmlWebpackPlugin(),
+        new HtmlWebpackPlugin( {
+          template: './public/index.html',
+          inject: 'body',
+          publicPath: './'
+        }),
         new WasmPackPlugin({
             crateDirectory: path.resolve(__dirname, ".")
         }),
