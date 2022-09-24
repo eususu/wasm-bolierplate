@@ -1,5 +1,9 @@
 # wasm-bolierplate
 
+# requirements
+- webpack ^5
+- nodejs ^8
+
 
 # prepare
 - install cargo

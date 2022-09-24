@@ -12,27 +12,35 @@ macro_rules! console_log {
     ($($t:tt)*) => (log(&format_args!($($t)*).to_string()))
 }
 
+macro_rules! document {
+    () => (
+        web_sys::window().expect("no global window exist")
+        .document().expect("no document")
+    )
+}
+
+macro_rules! body {
+    () => (
+        web_sys::window().expect("no global window exist")
+        .document().expect("no document")
+        .body().expect("no body")
+    )
+}
+
 
 fn add_click_event() -> Result<(), JsValue> {
-    let window = web_sys::window().expect("no global window exists");
-    let document = window.document().expect("should have a document on window");
-    let body = document.body().expect("document should have a body");
+
+    let btn = document!().get_element_by_id("button_1").unwrap();
 
     let on_click = Closure::wrap(Box::new(move || {
-
-        let p = document.create_element("p")?;
+        let p = document!().create_element("p").expect("failed to create element");
         p.set_text_content(Some("Init"));
-        body.append_child(&p);
+        body!().append_child(&p).expect("failed to append to body");
 
-        p.set_text_content(Some("Init"));
-
-        
     }) as Box<dyn FnMut()>);
 
-    body.set_onclick(Some(on_click.as_ref().unchecked_ref()));
+    btn.add_event_listener_with_callback("click", on_click.as_ref().unchecked_ref())?;
     on_click.forget();
-
-    //document.getElementById("button_1");
 
     Ok(())
 }
@@ -41,6 +49,6 @@ fn add_click_event() -> Result<(), JsValue> {
 pub fn entry_point() -> Result<(), JsValue> {
     console_log!("Hello, world!");
 
-    add_click_event();
+    add_click_event()?;
     Ok(())
 }
